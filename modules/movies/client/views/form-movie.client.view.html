@@ -1,0 +1,76 @@
+<section>
+  <link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
+  <div class="page-header">
+    <table>
+      <tr>
+        <td><img class="img-responsive text-center" src="modules/core/client/img/brand/clap.png" style = " width: 100px; height: 100px;" /></td>
+        <td><h1  style="font-size: 300.5%; font-family: 'Poiret One', cursive; font-weight:bold; " >{{vm.movie._id ? 'Editar Pelicula' : 'Crear Pelicula'}}</h1></td>
+      </tr>
+    </table>
+
+  </div>
+  <div class="col-md-12">
+    <form name="vm.form.movieForm" class="form-horizontal" ng-submit="vm.save(vm.form.movieForm.$valid)" novalidate>
+      <fieldset>
+        <div class="form-group" show-errors>
+          <!--Search -->
+          <div class="input-group">
+
+            <label class="control-label" for="search"></label>
+            <input name="search" type="text" ng-model="search" id="search" class="form-control" placeholder="search"
+                 ng-model-options="{ debounce: 800 }">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+
+          </div>
+          (*) Buscar la pelicula a través de OMDb API
+          <hr align="left" noshade="noshade" size="2" width="100%" />
+          <br>
+          <!--Nombre-->
+          <label class="control-label" for="name">Name</label>
+          <input name="name" type="text" ng-model="vm.movie.name" id="name" class="form-control" placeholder="Name"
+                 required>
+          <div ng-messages="vm.form.movieForm.name.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Movie name is required.</p>
+          </div>
+
+          <!--Año-->
+          <label class="control-label" for="año">Año</label>
+          <input name="año" type="text" ng-model="vm.movie.fecha" id="Año" class="form-control" placeholder="Año">
+          <!--Sinopsis-->
+          <label class="control-label" for="sinopsis">Sinopsis</label>
+          <input name="sinopsis" type="text" ng-model="vm.movie.sinopsis" id="Sinopsis" class="form-control"
+                 placeholder="Sinopsis">
+          <!--Duracion-->
+          <label class="control-label" for="duracion">Duracion</label>
+          <input name="sinopsis" type="text" ng-model="vm.movie.duracion" id="Duracion" class="form-control"
+                 placeholder="Duracion">
+          <!--Director-->
+          <label class="control-label" for="director">Director</label>
+          <input name="director" type="text" ng-model="vm.movie.director" id="Director" class="form-control"
+                 placeholder="Director">
+          <!--Actores-->
+          <label class="control-label" for="actores">Actores</label>
+          <input name="actores" type="text" ng-model="vm.movie.actores" id="Actores" class="form-control"
+                 placeholder="Actores">
+          <!--Referencias-->
+          <label class="control-label" for="referencias">Referencias</label>
+          <input name="referencias" type="text" ng-model="vm.movie.referencias" ng-list id="referencias"
+                 class="form-control"
+                 placeholder="referencias">
+          <!--Tag-->
+          <label class="control-label" for="tag">Tags</label>
+          <input name="tag" type="text" ng-model="vm.movie.tags" id="tag" class="form-control"
+                 placeholder="tag">
+
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-default">{{vm.movie._id ? 'Editar' : 'Crear'}}</button>
+        </div>
+        <div ng-show="vm.error" class="text-danger">
+          <strong ng-bind="vm.error"></strong>
+        </div>
+
+      </fieldset>
+    </form>
+  </div>
+</section>

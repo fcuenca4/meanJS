@@ -1,0 +1,107 @@
+<section>
+  <div class="page-header">
+    <h1 data-ng-bind="vm.movie.name"></h1>
+  </div>
+  <div class="pull-right">
+    <a class="btn btn-primary" style="margin-left: 10%;"
+       data-ui-sref="movies.calificar({ movieId: vm.movie._id })">
+      <i class="glyphicon glyphicon-star"></i>
+    </a>
+  </div>
+  <span> </span>
+  <div class="pull-right"
+       data-ng-show="vm.movie.isCurrentUserOwner">
+    <a class="btn btn-primary"
+       data-ui-sref="movies.edit({ movieId: vm.movie._id })">
+      <i class="glyphicon glyphicon-edit"></i>
+    </a>
+    <a class="btn btn-primary" data-ng-click="vm.remove()">
+      <i class="glyphicon glyphicon-trash"></i>
+    </a>
+  </div>
+
+
+  <div id="main-info" class="col-md-8">
+    <img ng-src="{{ vm.movie.poster=='N/A' ? 'http://placehold.it/150x220&text=N/A' : vm.movie.poster }}"
+         class="thumbnail animated flip movie-poster">
+        <span class="span-outer">
+          <a href="http://imdb.com/title/{{ vm.movie.imdbId }}" target="_blank">{{ vm.movie.name }}</a>
+        </span>, {{ vm.movie.Year }}
+
+    <p><strong>Lanzamiento:</strong> {{ vm.movie.fecha }} ({{ vm.movie.duracion }})</p>
+
+    <p>{{ vm.movie.sinopsis }}</p>
+
+    <p class="outer-p">
+    <div class="inner-p">
+      <span class="label label-primary">Directores :</span> {{ vm.movie.director }}
+    </div>
+    <div class="inner-p">
+      <span class="label label-primary">Actores :</span> {{ vm.movie.actores }}
+    </div>
+    <div class="inner-p">
+      <span class="label label-primary">Genero :</span> {{ vm.movie.genero }}
+    </div>
+
+
+    <p class="outer-p-2">Calificaciones:
+      <br>
+      <strong>IMDb Rating</strong>: <span class="label label-success">{{ vm.movie.imdbRating }}</span>
+      <br>
+      <strong>Rotten Tomatoes</strong>: <span class="label label-success">{{ vm.movie.tomatoRating }}</span>
+    </p>
+
+    <p class="outer-p-3">
+      <a ng-href="https://www.youtube.com/results?search_query={{ vm.movie.name }}" target="_blank"
+         class="btn btn-default btn-xs btn-info">Watch Trailers!</a>
+      <span class="divider"></span>
+      <a ng-href="http://subscene.com/subtitles/title?q={{ vm.movie.name }}" target="_blank"
+         class="btn btn-default btn-xs btn-info">Get Subtitles!</a>
+      <span class="divider"></span>
+      <a ng-href="http://www.theost.com/search/custom/?key={{ vm.movie.name }}" target="_blank"
+         class="btn btn-default btn-xs btn-info">Hear Soundtracks!</a>
+      <span class="divider"></span>
+      <a ng-href="http://www.amazon.in/s/ref=nb_sb_noss_1?url=search-alias%3Ddvd&field-keywords={{ vm.movie.name }}"
+         target="_blank" class="btn btn-default btn-xs btn-info">Buy this movie!</a>
+    </p>
+
+
+  </div>
+
+  <div id="related-results" class="col-md-4 animated bounce related-results">
+    <div ng-if="vm.movie.related.Response!=='False'">
+      Resultados Relacionados:
+      <hr>
+      <ul class="rel-results">
+        <li ng-repeat="movie in vm.movie.related.Search">
+          <a href="#" id="{{ $index + 1 }}" ng-click="update(movie)">{{ movie.Title }}</a>, {{ movie.Year }}
+        </li>
+      </ul>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        Tambien te puede interesar:
+        <hr>
+      </div>
+      <div class="col-sm-3 col-xs-6" ng-repeat="movie in relacionadas">
+        <a href="./movies/{{movie._id}}">
+
+          <h5>{{movie.name}}</h5>
+          <img ng-src="{{movie.poster}}" width="500" height="300" class="img-responsive"/>
+        </a>
+      </div>
+    </div>
+  </div>
+  </div>
+  <small>
+    <em class="text-muted">
+      Posted on
+      <span data-ng-bind="vm.movie.created | date:'mediumDate'"></span>
+      by
+      <span data-ng-if="vm.movie.user"
+            data-ng-bind="vm.movie.user.displayName"></span>
+      <span data-ng-if="!vm.movie.user">Deleted User</span>
+    </em>
+  </small>
+  <p class="lead" data-ng-bind="vm.movie.content"></p>
+</section>

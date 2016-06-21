@@ -1,0 +1,88 @@
+<section>
+  <link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
+  <div class="jumbotron text-center">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12">
+        <img class="img-responsive text-center" src="modules/core/client/img/brand/logo.png" />
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="animated zoomInRight">
+    <div class="input-group search-bar">
+      <label class="control-label" for="search"></label>
+      <input type="text" placeholder="Search Movies" class="form-control" data-ng-model="search">
+      <span class="input-group-addon bar-style"><i class="glyphicon glyphicon-search"></i></span>
+    </div>
+  </div> -->
+
+  <nav class="navbar navbar-default" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <!-- Ordenar -->
+      <ul class="navbar-form navbar-left">
+        <select class='form-control' ng-model="order">
+          <option value="">Ordenar</option>
+          <option value="name">Ascendente por Titulo</option>
+          <option value="-name">Descendente por Titulo</option>
+          <option value="fecha">Ascendente por Año</option>
+          <option value="-fecha">Descendente por Año</option>
+          <option value="rating">Ascendente por Calificacion</option>
+          <option value="-rating">Descendente por Calificacion</option>
+        </select>
+      </ul>
+
+    </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="navbar-collapse collapse" >
+
+      <!--filtro-->
+      <form class="navbar-form navbar-right">
+        <i class="glyphicon glyphicon-search"></i>
+        <div class="form-group">
+          <input type="text" placeholder="Search Movies" class="form-control" data-ng-model="search">
+        </div>
+      </form>
+    </div>
+
+  </nav>
+
+  <br>
+
+  <div class="row movies-list">
+    <!-- El $ dentro del filtro busca por todas las propiedades del modelo -->
+    <a data-ng-repeat="movie in vm.movies | orderBy:order:false  | filter:{ $:search }  "
+       data-ui-sref="movies.view({ movieId: movie._id  })"
+       class="col-md-4 ">
+
+
+      <span class="list-group-item-heading"  style="font-size: 300.5%; font-family: 'Poiret One', cursive;" data-ng-bind="movie.name"></span>
+      <br>
+      <span class="glyphicon glyphicon-star" style="color:#FF9933"></span>
+      <span style="font-style: italic; font-size: 62.5%" data-ng-bind="movie.rating"></span>
+      <span style="font-style: italic; font-size: 62.5%"> ptos. </span>
+      <br>
+      <small class="list-group-item-text">
+        Posted on
+        <span data-ng-bind="movie.created | date:'mediumDate'"></span>
+        by
+        <span data-ng-if="movie.user" data-ng-bind="movie.user.displayName"></span>
+        <span data-ng-if="!movie.user">Deleted User</span>
+      </small>
+      <p>
+        <img  style = " width: 50%; height: 50%;"  ng-src="{{ movie.poster=='N/A' ? 'http://placehold.it/150x220&text=N/A' : movie.poster }}"
+             class="thumbnail animated flip movie-poster col-md-offset-1 ">
+      </p>
+
+    </a>
+  </div>
+  <div class="alert alert-warning text-center" data-ng-if="vm.movies.$resolved && !vm.movies.length">
+    No Movies yet, why don't you <a data-ui-sref="movies.create">create one</a>?
+  </div>
+</section>
